@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize";
-import { FooFactory } from "./foo";
+import { UserFactory } from "./user";
 
 const dbName = 'dinkumDb';
 const username = 'root';
@@ -12,6 +12,6 @@ const sequelize = new Sequelize(dbName, username, password, {
 });
 
 // TODO: add data model with a factory
-FooFactory(sequelize);
+UserFactory(sequelize);
 
 export const db = sequelize;
