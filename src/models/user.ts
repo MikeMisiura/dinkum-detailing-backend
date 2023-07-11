@@ -16,7 +16,8 @@ export function UserFactory(sequelize: Sequelize) {
         },
         email: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: true
         },
         admin: {
             type: DataTypes.BOOLEAN,
