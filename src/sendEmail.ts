@@ -9,12 +9,12 @@ Nylas.config({
 const nylas = Nylas.with("aeuRVmDVDEhWFPGjILnDfOLPlQA4a9");
 
 const draft = new Draft(nylas, {
-  subject: 'With Love, from Nylas',
-  body: 'This email was sent using the Nylas email API. Visit https://nylas.com for details.',
-  to: [{ name: 'Matthew Slater', email: 'mattslat4@gmail.com' }]
+  subject: 'This is a TEST',
+  body: 'Test',
+  to: [{ name: 'Matthew Slater', email: 'mattslat4@gmail.com' }, { name: 'Mike Misiura', email: 'mikemisiura@gmail.com' }]
 });
 
 // Send the draft
-draft.send().then(message => {
+draft.send().then((message: { id: any; }) => {
     console.log(`${message.id} was sent`);
 });

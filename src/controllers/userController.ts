@@ -21,3 +21,17 @@ export const loginUser: RequestHandler = async (req, res, next) => {
         // let token = await signUserToken(existingUser);
         res.status(200).json({ existingUser });
 }
+
+export const createUser: RequestHandler = async (req, res, next) => {
+    let newUser: User = req.body;
+    if (newUser.email) {
+        let created = await User.create(newUser);
+        res.status(201).json({
+            userId: created.userId,
+            username: created.email
+        });
+    }
+    else {
+        res.status(400).send('Username and password required');
+    }
+}
