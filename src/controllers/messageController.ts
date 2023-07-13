@@ -1,6 +1,8 @@
 import { RequestHandler } from "express";
 import { Message } from "../models/message";
 import { User } from "../models/user";
+const Nylas = require('nylas');
+const { default: Draft } = require('nylas/lib/models/draft');
 
 export const getAllMessages: RequestHandler = async (req, res, next) => {
     let messages = await Message.findAll();
@@ -42,6 +44,25 @@ export const createMessage: RequestHandler = async (req, res, next) => {
     else {
         res.status(400).send();
     }
+
+    //Send Email
+    Nylas.config({
+        clientId: "5g6s3fky71a9p1i7kafs9fnd8",
+        clientSecret: "c76lzmje7wme0lbjbuvl2xjfy",
+    });
+    
+    const nylas = Nylas.with("aeuRVmDVDEhWFPGjILnDfOLPlQA4a9");
+    
+    const draft = new Draft(nylas, {
+      subject: 'New Message',
+      body: 'NEW MESSAGE:' + newMessage.message,
+      to: [{ name: 'Matthew Slater', email: 'mattslat4@gmail.com' }, { name: 'Mike Misiura', email: 'mikemisiura@gmail.com' }]
+    });
+    
+    // Send the draft
+    draft.send().then((message: { id: any; }) => {
+        console.log(`${message.id} was sent`);
+    });
 }
 
 export const getOneMessage: RequestHandler = async (req, res, next) => {
