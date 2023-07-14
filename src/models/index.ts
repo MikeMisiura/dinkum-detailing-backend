@@ -4,7 +4,7 @@ import { AssociateUserMessage, MessageFactory } from "./message";
 
 const dbName = 'dinkumDb';
 const username = 'root';
-const password = 'Bob.sql04';
+const password = 'Password1!';
 
 const sequelize = new Sequelize(dbName, username, password, {
     host: 'localhost',
