@@ -10,20 +10,29 @@ export const loginUser: RequestHandler = async (req, res, next) => {
         return res.status(400).send('email required');
     }
 
-    const existingUser: User | null = await User.findOne({
+    let existingUser: User | null = await User.findOne({
         where:
             { email: req.body.email }
     });
 
     if (!existingUser) {
-        return res.status(400).send('email not found');
+        const newUser: User = req.body;
+        try {
+            console.log(newUser)
+            let created = await User.create(newUser);
+            console.log(created)
+            existingUser = created
+        }
+        catch (err) {
+            return res.status(500).send(err);
+        }
     }
 
     // TODO: add authentication
 
     let token = await signUserToken(existingUser);
 
-    let tokenizedLink = "http://localhost:3001/login/" + token
+    let tokenizedLink = "http://localhost:3001/login/token/" + token
 
     console.log(tokenizedLink)
 
@@ -38,7 +47,11 @@ export const loginUser: RequestHandler = async (req, res, next) => {
     const draft = new Draft(nylas, {
         subject: 'User Authentication',
         body: 'Click this link to login: ' + tokenizedLink,
-        to: [{ name: 'Matthew Slater', email: 'mattslat4@gmail.com' }, { email: existingUser.email }]
+        to: [
+            // { name: 'Matthew Slater', email: 'mattslat4@gmail.com' },
+            // { name: 'Mike Misiura', email: 'mikemisiura@gmail.com' },
+            { email: existingUser.email }
+        ]
     });
 
     // Send the draft
@@ -48,18 +61,4 @@ export const loginUser: RequestHandler = async (req, res, next) => {
 
 
     res.status(200).json({ existingUser });
-}
-
-export const createUser: RequestHandler = async (req, res, next) => {
-    let newUser: User = req.body;
-    if (newUser.email) {
-        let created = await User.create(newUser);
-        res.status(201).json({
-            userId: created.userId,
-            username: created.email
-        });
-    }
-    else {
-        res.status(400).send('Username and password required');
-    }
 }
