@@ -29,3 +29,7 @@ export function UserFactory(sequelize: Sequelize) {
         sequelize
     });
 }
+
+export interface ILookupUser {
+    email: string
+}

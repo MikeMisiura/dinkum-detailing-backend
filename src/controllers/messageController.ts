@@ -1,8 +1,9 @@
 import { Message } from './../models/message';
 import { RequestHandler } from "express";
 import { User } from "../models/user";
-const Nylas = require('nylas');
-const { default: Draft } = require('nylas/lib/models/draft');
+import { sendEmail } from '../services/sendEmail';
+import { devRecipient } from '../developerInfo';
+import { findCreateUser } from './userController';
 
 export const getAllMessages: RequestHandler = async (req, res, next) => {
     let messages = await Message.findAll();
@@ -10,28 +11,14 @@ export const getAllMessages: RequestHandler = async (req, res, next) => {
 }
 
 export const createMessage: RequestHandler = async (req, res, next) => {
-    //For email authentication
 
     if (!req.body.email) {
         res.status(400).send('email required');
     }
 
-    let user: User | null = await User.findOne({
-        where:
-            { email: req.body.email }
-    });
-
+    const user: User | null = await findCreateUser(req.body)
     if (!user) {
-        const newUser: User = req.body;
-        try {
-            console.log(newUser)
-            let created = await User.create(newUser);
-            console.log(created)
-            user = created
-        }
-        catch (err) {
-            return res.status(500).send(err);
-        }
+        return res.status(400).send('database err');
     }
 
     let newMessage: any = {
@@ -42,33 +29,16 @@ export const createMessage: RequestHandler = async (req, res, next) => {
     if (newMessage.message) {
         let created = await Message.create(newMessage);
         res.status(201).json(created);
-    }
-    else {
+    } else {
         res.status(400).send();
     }
 
-    //Send Email
-    Nylas.config({
-        clientId: "5g6s3fky71a9p1i7kafs9fnd8",
-        clientSecret: "c76lzmje7wme0lbjbuvl2xjfy",
-    });
-
-    const nylas = Nylas.with("aeuRVmDVDEhWFPGjILnDfOLPlQA4a9");
-
-    const draft = new Draft(nylas, {
-        subject: 'New Message',
+    sendEmail({
+        subject: "New Message",
         body: 'NEW MESSAGE:' + newMessage.message,
-        to: [
-            // { name: 'Matthew Slater', email: 'mattslat4@gmail.com' },
-            { name: 'Mike Misiura', email: 'mikemisiura@gmail.com' },
-            { email: user.email }
-        ]
-    });
+        to: [devRecipient, { email: user.email }]
+    })
 
-    // Send the draft
-    draft.send().then((message: { id: any; }) => {
-        console.log(`${message.id} was sent`);
-    });
 }
 
 export const getOneMessage: RequestHandler = async (req, res, next) => {
