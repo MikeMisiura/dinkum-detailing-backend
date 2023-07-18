@@ -1,10 +1,11 @@
 import { Sequelize } from "sequelize";
 import { UserFactory } from "./user";
 import { AssociateUserMessage, MessageFactory } from "./message";
+import { dbPassword } from "../developerInfo";
 
 const dbName = 'dinkumDb';
 const username = 'root';
-const password = 'Bob.sql04';
+const password = dbPassword;
 
 const sequelize = new Sequelize(dbName, username, password, {
     host: 'localhost',

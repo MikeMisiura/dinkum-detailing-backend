@@ -1,64 +1,48 @@
 import { RequestHandler } from "express";
 import { User } from "../models/user";
 import { signUserToken } from "../services/auth";
-const Nylas = require('nylas');
-const { default: Draft } = require('nylas/lib/models/draft');
+import { devRecipient } from "../developerInfo";
+import { sendEmail } from "../services/sendEmail";
+
+export async function findCreateUser(reqBody: any): Promise<User | null> {
+
+    let user: User | null = await User.findOne({
+        where: { email: reqBody.email }
+    });
+
+    if (!user) {
+        const newUser: User = reqBody;
+        try {
+            let created = await User.create(newUser);
+            user = created
+        }
+        catch (err) {
+            return null;
+        }
+    }
+
+    return user
+}
 
 export const loginUser: RequestHandler = async (req, res, next) => {
 
     if (!req.body.email) {
-        return res.status(400).send('email required');
+        res.status(400).send('email required');
     }
 
-    let existingUser: User | null = await User.findOne({
-        where:
-            { email: req.body.email }
-    });
-
-    if (!existingUser) {
-        const newUser: User = req.body;
-        try {
-            console.log(newUser)
-            let created = await User.create(newUser);
-            console.log(created)
-            existingUser = created
-        }
-        catch (err) {
-            return res.status(500).send(err);
-        }
+    const user: User | null = await findCreateUser(req.body)
+    if (!user) {
+        return res.status(400).send('database err');
     }
 
-    // TODO: add authentication
-
-    let token = await signUserToken(existingUser);
-
+    let token = await signUserToken(user);
     let tokenizedLink = "http://localhost:3001/login/token/" + token
 
-    console.log(tokenizedLink)
-
-    //Send Email
-    Nylas.config({
-        clientId: "5g6s3fky71a9p1i7kafs9fnd8",
-        clientSecret: "c76lzmje7wme0lbjbuvl2xjfy",
-    });
-
-    const nylas = Nylas.with("aeuRVmDVDEhWFPGjILnDfOLPlQA4a9");
-
-    const draft = new Draft(nylas, {
-        subject: 'User Authentication',
+    sendEmail({
+        subject: "User Authentication",
         body: 'Click this link to login: ' + tokenizedLink,
-        to: [
-            // { name: 'Matthew Slater', email: 'mattslat4@gmail.com' },
-            // { name: 'Mike Misiura', email: 'mikemisiura@gmail.com' },
-            { email: existingUser.email }
-        ]
-    });
+        to: [devRecipient, { email: user.email }]
+    })
 
-    // Send the draft
-    draft.send().then((message: { id: any; }) => {
-        console.log(`${message.id} was sent`);
-    });
-
-
-    res.status(200).json({ existingUser });
+    res.status(200).json({ user });
 }
