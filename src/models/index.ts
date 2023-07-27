@@ -2,6 +2,7 @@ import { Sequelize } from "sequelize";
 import { UserFactory } from "./user";
 import { AssociateUserMessage, MessageFactory } from "./message";
 import { dbPassword } from "../developerInfo";
+import { EstimateFactory } from "./estimate";
 
 const dbName = 'dinkumDb';
 const username = 'root';
@@ -16,6 +17,7 @@ const sequelize = new Sequelize(dbName, username, password, {
 // TODO: add data model with a factory
 UserFactory(sequelize);
 MessageFactory(sequelize);
+EstimateFactory(sequelize);
 AssociateUserMessage();
 
 export const db = sequelize;

@@ -4,7 +4,7 @@ import { User } from "./user";
 export class Estimate extends Model<InferAttributes<Estimate>, InferCreationAttributes<Estimate>>{
     declare estimateId: number;
     declare userId: number;
-    declare cost: number;
+    declare price: number;
     declare seats: number;
     declare leather: boolean;
     declare conditioner: boolean;
@@ -26,7 +26,7 @@ export function EstimateFactory(sequelize: Sequelize) {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        cost: {
+        price: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
