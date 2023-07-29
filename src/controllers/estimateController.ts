@@ -4,7 +4,7 @@ import { User } from "../models/user";
 import { sendEmail } from '../services/sendEmail';
 import { devRecipient } from '../developerInfo';
 import { findCreateUser } from './userController';
-import { Message } from '../models/message';
+import { verifyReCaptcha } from '../services/auth';
 
 export const getAllEstimates: RequestHandler = async (req, res, next) => {
     let estimates = await Estimate.findAll();
@@ -13,6 +13,14 @@ export const getAllEstimates: RequestHandler = async (req, res, next) => {
 
 export const createEstimate: RequestHandler = async (req, res, next) => {
 
+    // console.log(req)
+
+    // ------------reCAPTCHA------------
+    // verify human; return 403 if bot
+    let human: boolean | null | undefined = await verifyReCaptcha(req);
+    if (!human) { return res.status(403).send() }
+    
+    
     if (!req.body.email) {
         res.status(400).send('email required');
     }
