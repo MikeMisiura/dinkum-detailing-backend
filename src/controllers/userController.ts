@@ -25,15 +25,20 @@ export async function findCreateUser(reqBody: any): Promise<User | null> {
 }
 
 export const loginUser: RequestHandler = async (req, res, next) => {
+    function validateEmail(email: string) {
+        var re = /\S+@\S+\.\S+/;
+        return re.test(email);
+      }
 
-    if (!req.body.email) {
+    if (!req.body.email || validateEmail(req.body.email) === false) {
         res.status(400).send('email required');
-    }
+    }else{
+
 
     const user: User | null = await findCreateUser(req.body)
     if (!user) {
-        return res.status(400).send('database err');
-    }
+        return res.status(401).send('database err');
+    }else{
 
     let token = await signUserToken(user);
     let tokenizedLink = "http://localhost:3001/login/token/" + token
@@ -46,3 +51,6 @@ export const loginUser: RequestHandler = async (req, res, next) => {
 
     res.status(200).json({ user });
 }
+}
+}
+
