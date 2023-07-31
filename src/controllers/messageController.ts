@@ -4,6 +4,7 @@ import { User } from "../models/user";
 import { sendEmail } from '../services/sendEmail';
 import { devRecipient } from '../developerInfo';
 import { findCreateUser } from './userController';
+import { verifyReCaptcha } from '../services/auth';
 
 export const getAllMessages: RequestHandler = async (req, res, next) => {
     let messages = await Message.findAll();
@@ -12,6 +13,12 @@ export const getAllMessages: RequestHandler = async (req, res, next) => {
 
 export const createMessage: RequestHandler = async (req, res, next) => {
 
+    // ------------reCAPTCHA------------
+    // verify human; return 403 if bot
+    let human: boolean | null | undefined = await verifyReCaptcha(req);
+    if (!human) { return res.status(403).send() }
+    
+    
     if (!req.body.email) {
         res.status(400).send('email required');
     }
