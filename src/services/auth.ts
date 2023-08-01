@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import { User } from '../models/user'
 import { Request } from 'express'
 import axios from 'axios'
-import { reCAPTCHASecret } from '../developerInfo'
+import { reCAPTCHASecret } from '../environmentTypes'
 
 const secret = 'Hello, Goodbye, Friend'
 
@@ -38,9 +38,10 @@ export const verifyReCaptcha = async (req: Request) => {
     //     formData,
     //     captchaToken
     //   } = req.body;
-    console.log(req.headers.recaptcha)
+    
+    // console.log(req.headers.recaptcha)
     const reCAPTCHAHeader: any = req.headers.recaptcha
-    console.log(reCAPTCHAHeader)
+    // console.log(reCAPTCHAHeader)
 
     if (!reCAPTCHAHeader) {
         return null
@@ -53,7 +54,7 @@ export const verifyReCaptcha = async (req: Request) => {
         `https://www.google.com/recaptcha/api/siteverify?secret=${reCAPTCHASecret}&response=${captchaToken}`
     );
 
-    console.log(res.data)
+    // console.log(res.data)
 
     // Extract result from the API response
     if (res.data.success) {

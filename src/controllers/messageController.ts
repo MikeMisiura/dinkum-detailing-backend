@@ -2,7 +2,7 @@ import { Message } from './../models/message';
 import { RequestHandler } from "express";
 import { User } from "../models/user";
 import { sendEmail } from '../services/sendEmail';
-import { devRecipient } from '../developerInfo';
+import { adminRecipient } from '../environmentTypes';
 import { findCreateUser } from './userController';
 import { verifyReCaptcha } from '../services/auth';
 
@@ -43,7 +43,7 @@ export const createMessage: RequestHandler = async (req, res, next) => {
     sendEmail({
         subject: "New Message",
         body: 'NEW MESSAGE:' + newMessage.message,
-        to: [devRecipient, { email: user.email }]
+        to: [adminRecipient, { email: user.email }]
     })
 
 }
