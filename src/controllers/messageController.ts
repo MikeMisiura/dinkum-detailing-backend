@@ -50,6 +50,7 @@ export const createMessage: RequestHandler = async (req, res, next) => {
         res.status(400).send();
     }
 }
+}
 
 export const getOneMessage: RequestHandler = async (req, res, next) => {
     let messageId = req.params.messageId;
