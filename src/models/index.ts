@@ -3,11 +3,11 @@ import { UserFactory } from "./user";
 import { AssociateUserMessage, MessageFactory } from "./message";
 import { dbHost, dbName, dbPassword, dbPort, dbUsername } from "../environmentTypes";
 
-import { EstimateFactory } from "./estimate";
+import { EstimateFactory, AssociateUserEstimate } from "./estimate";
 
 
 const sequelize = new Sequelize(dbName, dbUsername, dbPassword, {
-    host: 'dbHost',
+    host: dbHost,
     port: dbPort,
     dialect: 'mysql'
 });
