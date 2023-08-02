@@ -58,7 +58,7 @@ export const createEstimate: RequestHandler = async (req, res, next) => {
         " conditioner: " + newEstimate.conditioner + 
         " pets: " + newEstimate.pets + 
         " smoke: " + newEstimate.smoke,
-        to: [devRecipient, { email: user.email }]
+        to: [adminRecipient, { email: user.email }]
     })
 
 }
