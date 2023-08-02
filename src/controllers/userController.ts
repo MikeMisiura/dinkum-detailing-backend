@@ -26,8 +26,8 @@ export async function findCreateUser(reqBody: any): Promise<User | null> {
 
 export const loginUser: RequestHandler = async (req, res, next) => {
     function validateEmail(email: string) {
-        var re = /\S+@\S+\.\S+/;
-        return re.test(email);
+        let test = /\S+@\S+\.\S+/;
+        return test.test(email);
       }
 
     if (!req.body.email || validateEmail(req.body.email) === false) {
