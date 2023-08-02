@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import { User } from '../models/user'
 import { Request } from 'express'
 import axios from 'axios'
-import { reCAPTCHASecret } from '../developerInfo'
+import { reCAPTCHASecret } from '../environmentTypes'
 
 const secret = 'Hello, Goodbye, Friend'
 

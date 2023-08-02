@@ -1,16 +1,13 @@
 import { Sequelize } from "sequelize";
 import { UserFactory } from "./user";
 import { AssociateUserMessage, MessageFactory } from "./message";
-import { dbPassword } from "../developerInfo";
+import { dbHost, dbName, dbPassword, dbPort, dbUsername } from "../environmentTypes";
 import { EstimateFactory } from "./estimate";
 
-const dbName = 'dinkumDb';
-const username = 'root';
-const password = dbPassword;
 
-const sequelize = new Sequelize(dbName, username, password, {
-    host: 'localhost',
-    port: 3306,
+const sequelize = new Sequelize(dbName, dbUsername, dbPassword, {
+    host: 'dbHost',
+    port: dbPort,
     dialect: 'mysql'
 });
 

@@ -2,7 +2,7 @@ import { Estimate } from './../models/estimate';
 import { RequestHandler } from "express";
 import { User } from "../models/user";
 import { sendEmail } from '../services/sendEmail';
-import { devRecipient } from '../developerInfo';
+import { adminRecipient } from '../environmentTypes';
 import { findCreateUser } from './userController';
 import { verifyReCaptcha } from '../services/auth';
 

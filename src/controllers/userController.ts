@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import { User } from "../models/user";
 import { signUserToken } from "../services/auth";
-import { devRecipient } from "../developerInfo";
+import { devRecipient } from "../environmentTypes";
 import { sendEmail } from "../services/sendEmail";
 
 export async function findCreateUser(reqBody: any): Promise<User | null> {
