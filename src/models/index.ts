@@ -2,6 +2,7 @@ import { Sequelize } from "sequelize";
 import { UserFactory } from "./user";
 import { AssociateUserMessage, MessageFactory } from "./message";
 import { dbHost, dbName, dbPassword, dbPort, dbUsername } from "../environmentTypes";
+
 import { EstimateFactory } from "./estimate";
 
 
@@ -16,5 +17,6 @@ UserFactory(sequelize);
 MessageFactory(sequelize);
 EstimateFactory(sequelize);
 AssociateUserMessage();
+AssociateUserEstimate();
 
 export const db = sequelize;

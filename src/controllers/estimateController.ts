@@ -13,8 +13,6 @@ export const getAllEstimates: RequestHandler = async (req, res, next) => {
 
 export const createEstimate: RequestHandler = async (req, res, next) => {
 
-    // console.log(req)
-
     // ------------reCAPTCHA------------
     // verify human; return 403 if bot
     let human: boolean | null | undefined = await verifyReCaptcha(req);
@@ -41,9 +39,9 @@ export const createEstimate: RequestHandler = async (req, res, next) => {
     };
 
     if (newEstimate.userId && newEstimate.seats && newEstimate.price) {
-        console.log(newEstimate)
+        // console.log(newEstimate)
         let created = await Estimate.create(newEstimate);
-        console.log(created)
+        // console.log(created)
         res.status(201).json(created);
     } else {
         return res.status(400).send();

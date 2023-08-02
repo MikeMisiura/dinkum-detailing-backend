@@ -1,4 +1,4 @@
-import { nylasClientData } from "../developerInfo";
+import { nylasClientData } from "../environmentTypes";
 
 const Nylas = require('nylas');
 const { default: Draft } = require('nylas/lib/models/draft');
@@ -11,6 +11,8 @@ Nylas.config({
 const nylas = Nylas.with(nylasClientData.accessToken);
 
 export function sendEmail(email: IEmail) {
+
+
   const newEmail = new Draft(nylas, email);
 
   // Send the draft
