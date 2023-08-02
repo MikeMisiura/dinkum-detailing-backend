@@ -38,9 +38,10 @@ export const verifyReCaptcha = async (req: Request) => {
     //     formData,
     //     captchaToken
     //   } = req.body;
-    console.log(req.headers.recaptcha)
+    
+    // console.log(req.headers.recaptcha)
     const reCAPTCHAHeader: any = req.headers.recaptcha
-    console.log(reCAPTCHAHeader)
+    // console.log(reCAPTCHAHeader)
 
     if (!reCAPTCHAHeader) {
         return null
@@ -53,7 +54,7 @@ export const verifyReCaptcha = async (req: Request) => {
         `https://www.google.com/recaptcha/api/siteverify?secret=${reCAPTCHASecret}&response=${captchaToken}`
     );
 
-    console.log(res.data)
+    // console.log(res.data)
 
     // Extract result from the API response
     if (res.data.success) {

@@ -4,6 +4,7 @@ import { db } from './models';
 import userRoutes from './routes/userRoutes'
 import messageRoutes from './routes/messageRoutes'
 import estimateRoutes from './routes/estimateRoutes';
+import { frontendUrl, port } from './environmentTypes';
 
 const app = express();
 
@@ -14,7 +15,7 @@ app.use(express.urlencoded({extended: true}));
 
 const cors = require('cors');
 const corsOptions = {
-    origin: [ 'http://localhost:3001' ]
+    origin: [ frontendUrl ]
 };
 app.use(cors(corsOptions));
 // routes
@@ -32,4 +33,4 @@ db.sync().then(() => {
     console.info("connected to the database!")
 });
 
-app.listen(3000);
+app.listen( port );
