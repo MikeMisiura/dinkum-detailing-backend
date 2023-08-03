@@ -18,10 +18,14 @@ export const createMessage: RequestHandler = async (req, res, next) => {
     let human: boolean | null | undefined = await verifyReCaptcha(req);
     if (!human) { return res.status(403).send() }
     
-    
-    if (!req.body.email) {
-        res.status(400).send('email required');
-    }
+    function validateEmail(email: string) {
+        let test = /\S+@\S+\.\S+/;
+        return test.test(email);
+      }
+
+    if (!req.body.email || validateEmail(req.body.email) === false || !req.body.message) {
+        res.status(400).send('email and message required');
+    }else{
 
     const user: User | null = await findCreateUser(req.body)
     if (!user) {
@@ -36,16 +40,16 @@ export const createMessage: RequestHandler = async (req, res, next) => {
     if (newMessage.message) {
         let created = await Message.create(newMessage);
         res.status(201).json(created);
+
+        sendEmail({
+            subject: "New Message",
+            body: 'NEW MESSAGE:' + newMessage.message,
+            to: [adminRecipient, { email: user.email }]
+        })
     } else {
         res.status(400).send();
     }
-
-    sendEmail({
-        subject: "New Message",
-        body: 'NEW MESSAGE:' + newMessage.message,
-        to: [adminRecipient, { email: user.email }]
-    })
-
+}
 }
 
 export const getOneMessage: RequestHandler = async (req, res, next) => {

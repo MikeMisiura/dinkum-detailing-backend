@@ -3,6 +3,7 @@ import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize }
 export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>>{
     declare userId: number;
     declare email: string;
+    declare phone: string;
     declare admin: boolean;
 }
 
@@ -19,6 +20,11 @@ export function UserFactory(sequelize: Sequelize) {
             allowNull: false,
             unique: true
         },
+        phone: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            unique: true
+        },
         admin: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
@@ -31,5 +37,6 @@ export function UserFactory(sequelize: Sequelize) {
 }
 
 export interface ILookupUser {
-    email: string
+    email: string,
+    phone: string
 }
