@@ -18,10 +18,14 @@ export const createEstimate: RequestHandler = async (req, res, next) => {
     let human: boolean | null | undefined = await verifyReCaptcha(req);
     if (!human) { return res.status(403).send() }
     
-    
-    if (!req.body.email) {
+    function validateEmail(email: string) {
+        let test = /\S+@\S+\.\S+/;
+        return test.test(email);
+      }
+
+    if (!req.body.email || validateEmail(req.body.email) === false) {
         res.status(400).send('email required');
-    }
+    }else{
 
     const user: User | null = await findCreateUser(req.body)
     if (!user) {
@@ -58,7 +62,7 @@ export const createEstimate: RequestHandler = async (req, res, next) => {
         " smoke: " + newEstimate.smoke,
         to: [adminRecipient, { email: user.email }]
     })
-
+}
 }
 
 export const getOneEstimate: RequestHandler = async (req, res, next) => {
