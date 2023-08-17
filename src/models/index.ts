@@ -7,12 +7,15 @@ import { EstimateFactory, AssociateUserEstimate } from "./estimate";
 
 
 const sequelize = new Sequelize(dbName, dbUsername, dbPassword, {
+    dialect: 'sqlite',
     host: dbHost,
-    port: dbPort,
-    dialect: 'mysql'
+    // port: dbPort,
+
+    storage: 'database.sqlite',
+    logging: false
 });
 
-// TODO: add data model with a factory
+// // TODO: add data model with a factory
 UserFactory(sequelize);
 MessageFactory(sequelize);
 EstimateFactory(sequelize);

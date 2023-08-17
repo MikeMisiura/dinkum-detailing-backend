@@ -18,6 +18,7 @@ const corsOptions = {
     origin: [ frontendUrl ]
 };
 app.use(cors(corsOptions));
+
 // routes
 // TODO: add routes here
 app.use('/api/users', userRoutes)
