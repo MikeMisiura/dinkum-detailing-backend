@@ -21,18 +21,13 @@ export const createMessage: RequestHandler = async (req, res, next) => {
 
     sendEmail({
         subject: "Your Message to Dinkum Detailing",
-        body: 'Thank you for reaching out! We will be in touch shortly. Your message: ' + req.body.message + ' Your phone number: ' + req.body.phone,
+        body: 'Thank you for reaching out! We will be in touch shortly. ' + 
+            'If you prefer, you can email us at ' + adminRecipient +
+            ' or call us at (320) 496-6010. ' + 
+            'We have Your message as: ' + req.body.message + 
+            ' And your phone number as: ' + req.body.phone,
         to: [adminRecipient, { email: req.body.email }],
-        from: adminRecipient
     })
 
-    sendEmail({
-        subject: "New Message from " + req.body.email,
-        body: 'Phone Number: ' + req.body.phone + 
-            'NEW MESSAGE: ' + req.body.message,
-        to: [adminRecipient],
-        from: { email: req.body.email }
-    })
     res.status(200).send();
-
 }
