@@ -8,7 +8,7 @@ export const createEstimate: RequestHandler = async (req, res, next) => {
     // ------------reCAPTCHA------------
     // verify human; return 403 if bot
     let human: boolean | null | undefined = await verifyReCaptcha(req);
-    if (!human) { return res.status(403).send() }
+    // if (!human) { return res.status(403).send() }
 
     function validateEmail(email: string) {
         let test = /\S+@\S+\.\S+/;
