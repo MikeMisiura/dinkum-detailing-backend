@@ -2,7 +2,7 @@ import express, { NextFunction, Request, Response } from 'express'
 import morgan from 'morgan';
 import messageRoutes from './routes/messageRoutes'
 import estimateRoutes from './routes/estimateRoutes';
-import { frontendUrl, port } from './environmentTypes';
+import { frontendIPs, port } from './environmentTypes';
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use(express.urlencoded({extended: true}));
 
 const cors = require('cors');
 const corsOptions = {
-    origin: [ frontendUrl ]
+    origin: frontendIPs
 };
 app.use(cors(corsOptions));
 

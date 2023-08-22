@@ -3,25 +3,11 @@ import * as dotenv from "dotenv";
 
 dotenv.config()
 
-// Dev Only!
-export const devRecipient: IRecipient = { 
-    name: process.env.NAME ?? '', 
-    email: process.env.EMAIL ?? '' 
-}
-
 // Admin email info
 export const adminRecipient: IRecipient = { 
     name: process.env.NAME ?? '', 
     email: process.env.EMAIL ?? '' 
 }
-
-// database
-export const dbName: string = process.env.DATABASE_NAME ?? '';
-export const dbUsername: string = process.env.DATABASE_USERNAME ?? '';
-export const dbPassword: string = process.env.DATABASE_PASSWORD ?? '';
-export const dbHost: string = process.env.DATABASE_HOST ?? '';
-export const dbPort: number = parseInt(process.env.DATABASE_PORT ?? '');
-
 
 // Nylas Info
 
@@ -40,6 +26,18 @@ export const nylasClientData: nylasClientDataType = {
 // reCAPTCHA 
 export const reCAPTCHASecret: string =  process.env.RECAPTCHA_SECRET ?? ''
 
-// misc
+// Frontend IPs
 export const frontendUrl: string = process.env.FRONTEND_URL ?? '';
+export const frontendIP1: string = process.env.FRONTEND_IP1 ?? '';
+export const frontendIP2: string = process.env.FRONTEND_IP2 ?? '';
+export const frontendIP3: string = process.env.FRONTEND_IP3 ?? '';
+export const frontendIPs: string[] = [
+    frontendUrl, 
+    frontendIP1, 
+    frontendIP2, 
+    frontendIP3
+]
+
+
+// misc
 export const port: string = process.env.PORT ?? '';
