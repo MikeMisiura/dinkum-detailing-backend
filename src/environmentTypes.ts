@@ -31,11 +31,13 @@ export const frontendUrl: string = process.env.FRONTEND_URL ?? '';
 export const frontendIP1: string = process.env.FRONTEND_IP1 ?? '';
 export const frontendIP2: string = process.env.FRONTEND_IP2 ?? '';
 export const frontendIP3: string = process.env.FRONTEND_IP3 ?? '';
+export const frontendLH: string = process.env.FRONTEND_LOCALHOST ?? '';
 export const frontendIPs: string[] = [
     frontendUrl, 
     frontendIP1, 
     frontendIP2, 
-    frontendIP3
+    frontendIP3,
+    frontendLH
 ]
 
 

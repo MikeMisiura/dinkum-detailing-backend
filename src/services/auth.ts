@@ -6,10 +6,12 @@ export const verifyReCaptcha = async (req: Request) => {
     const reCAPTCHAHeader: any = req.headers.recaptcha
 
     if (!reCAPTCHAHeader) {
+        console.log('no reCAPTCHA header')
         return null
     }
     const captchaToken = reCAPTCHAHeader.split(' ')[1]
 
+    console.log(captchaToken)
 
     // Call Google's API to get score
     const res = await axios.post(
