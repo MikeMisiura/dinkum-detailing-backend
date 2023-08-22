@@ -31,7 +31,7 @@ export const createEstimate: RequestHandler = async (req, res, next) => {
     sendEmail({
         subject: "Your Latest Estimate",
         body: 'Thank you for submitting your estimate. ' +
-            "Price (tax included): " + newEstimate.price +
+            "Price (tax included): $" + newEstimate.price +
             " Seats: " + newEstimate.seats +
             " Leather: " + newEstimate.leather +
             " Conditioner: " + newEstimate.conditioner +
