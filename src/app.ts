@@ -12,10 +12,11 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 const cors = require('cors');
-const corsOptions = {
-    origin: frontendIPs
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//     origin: frontendIPs
+// };
+// app.use(cors(corsOptions));
+app.use(cors());
 
 // routes
 // TODO: add routes here
