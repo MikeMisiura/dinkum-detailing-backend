@@ -11,8 +11,6 @@ export const verifyReCaptcha = async (req: Request) => {
     }
     const captchaToken = reCAPTCHAHeader.split(' ')[1]
 
-    console.log(captchaToken)
-
     // Call Google's API to get score
     const res = await axios.post(
         `https://www.google.com/recaptcha/api/siteverify?secret=${reCAPTCHASecret}&response=${captchaToken}`

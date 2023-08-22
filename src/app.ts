@@ -2,7 +2,7 @@ import express, { NextFunction, Request, Response } from 'express'
 import morgan from 'morgan';
 import messageRoutes from './routes/messageRoutes'
 import estimateRoutes from './routes/estimateRoutes';
-import { frontendIPs, port } from './environmentTypes';
+import { port } from './environmentTypes';
 
 const app = express();
 

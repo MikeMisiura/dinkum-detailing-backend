@@ -4,14 +4,11 @@ import { adminRecipient } from '../environmentTypes';
 import { verifyReCaptcha } from '../services/auth';
 
 export const createMessage: RequestHandler = async (req, res, next) => {
-    console.log('createMessage')
 
     // ------------reCAPTCHA------------
     // verify human; return 403 if bot
     let human: boolean | null | undefined = await verifyReCaptcha(req);
     if (!human) { return res.status(403).send() }
-
-    console.log('human' + human)
 
     function validateEmail(email: string) {
         let test = /\S+@\S+\.\S+/;
