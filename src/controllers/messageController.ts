@@ -22,7 +22,7 @@ export const createMessage: RequestHandler = async (req, res, next) => {
     sendEmail({
         subject: "Your Message to Dinkum Detailing",
         body: 'Thank you for reaching out! We will be in touch shortly. ' + 
-            'If you prefer, you can email us at ' + adminRecipient +
+            'If you prefer, you can email us at ' + adminRecipient.email +
             ' or call us at (320) 496-6010. ' + 
             'We have Your message as: ' + req.body.message + 
             ' And your phone number as: ' + req.body.phone,
