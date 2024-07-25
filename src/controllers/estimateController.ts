@@ -20,6 +20,9 @@ export const createEstimate: RequestHandler = async (req, res, next) => {
     }
 
     let newEstimate: any = {
+        name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
         seats: req.body.seats,
         leather: req.body.leather,
         conditioner: req.body.conditioner,
@@ -29,15 +32,18 @@ export const createEstimate: RequestHandler = async (req, res, next) => {
     };
 
     sendEmail({
-        subject: "Your Latest Estimate",
-        body: 'Thank you for submitting your estimate. ' +
-            "Price (tax included): $" + newEstimate.price +
+        subject: "New Estimate",
+        body: 'Hey Danny! You have a new customer!' +
+            " Name: " + newEstimate.name +
+            " Phone Number: " + newEstimate.phone +
+            " Email: " + newEstimate.email +
+            " Price (tax included): $" + newEstimate.price +
             " Seats: " + newEstimate.seats +
             " Leather: " + newEstimate.leather +
             " Conditioner: " + newEstimate.conditioner +
             " Pets: " + newEstimate.pets +
             " Smoke: " + newEstimate.smoke,
-        to: [adminRecipient, { email: req.body.email }]
+        to: [adminRecipient]
     })
     res.status(200).send();
 }
