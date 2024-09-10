@@ -33,15 +33,15 @@ export const createEstimate: RequestHandler = async (req, res, next) => {
 
     sendEmail({
         subject: "New Estimate",
-        body: 'Hey Danny! You have a new customer!' +
-            " Name: " + newEstimate.name +
-            " Phone Number: " + newEstimate.phone +
-            " Email: " + newEstimate.email +
-            " Price (tax included): $" + newEstimate.price +
-            " Seats: " + newEstimate.seats +
-            " Leather: " + newEstimate.leather +
-            " Conditioner: " + newEstimate.conditioner +
-            " Pets: " + newEstimate.pets +
+        body: 'Hey Danny! You have a new customer!' + '<br/>' +
+            " Name: " + newEstimate.name + '<br/>' +
+            " Phone Number: " + newEstimate.phone + '<br/>' +
+            " Email: " + newEstimate.email + '<br/>' +
+            " Price (tax included): $" + newEstimate.price + '<br/>' +
+            " Seats: " + newEstimate.seats + '<br/>' +
+            " Leather: " + newEstimate.leather + '<br/>' +
+            " Conditioner: " + newEstimate.conditioner + '<br/>' +
+            " Pets: " + newEstimate.pets + '<br/>' +
             " Smoke: " + newEstimate.smoke,
         to: [adminRecipient]
     })
